@@ -104,6 +104,23 @@ public class StudentServiceImpl implements StudentService {
 		
 		return studentList;
 	}
+
+	@Override
+	public List<Course> getCourseList(Integer studid, String dob)
+			throws AdminException, CourseException, StudentException {
+		Optional<Student> optStudent = sDAO.findById(studid);
+		
+		
+		if(optStudent.isEmpty())
+			throw new StudentException("Student does not exist");
+		
+		if(!studentExists(studid, dob))
+			throw new StudentException("Student date of birth wrong");
+		
+		Student student = optStudent.get();
+		
+		return student.getCourses();
+	}
 	
 	
 
